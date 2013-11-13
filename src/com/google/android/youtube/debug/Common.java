@@ -1,6 +1,8 @@
 package com.google.android.youtube.debug;
 
 public class Common {
+	
+	public static final boolean DEBUG = BuildConfig.DEBUG;
 	public static final String PKG_NAME = Module.class.getPackage().getName();
 	public static final String PKG_NAME_GSF = "com.google.android.gsf";
 	public static final String PKG_NAME_YOUTUBE = "com.google.android.youtube";

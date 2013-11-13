@@ -1,5 +1,7 @@
 package com.google.android.youtube.debug;
 
+import static com.google.android.youtube.debug.Common.PKG_NAME;
+
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Map;
@@ -17,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
@@ -26,12 +29,17 @@ public class DownloadButton implements IXposedHookLoadPackage,OnClickListener {
 	private static final String CLASS_VIDEO_INFO_FRAGMENTS = "com.google.android.apps.youtube.app.fragments.VideoInfoFragment";
 	protected Uri yt_url;
 	protected Context context;
-
+	private static final XSharedPreferences sPref = new XSharedPreferences(PKG_NAME);
+	
 	@Override
 	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
 		if (!lpparam.packageName.equals(Common.PKG_NAME_YOUTUBE))
 			return;
 
+		sPref.reload();
+		if(!sPref.getBoolean(Common.KEY_SHOW_DOWNLOAD, Common.DEF_SHOW_DOWNLOAD))
+			return;
+		
 		final Class<?> UiGmClass = XposedHelpers.findClass(CLASS_UI_GM, lpparam.classLoader);
 		final Class<?> VideoInfoFragments = XposedHelpers.findClass(CLASS_VIDEO_INFO_FRAGMENTS, lpparam.classLoader);
 		

@@ -18,9 +18,7 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 
 	@SuppressWarnings("unused")
 	private static final String TAG = MainActivity.class.getSimpleName();
-
 	private static final int DLG_NEED_FORCE_STOP = 0;
-
 	private static final String EXTRA_PKG_NAME = "PACKAGE_NAME";
 
 	@Override
@@ -29,6 +27,11 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 		getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_WRITEABLE | MODE_WORLD_READABLE);
 		addPreferencesFromResource(R.xml.preference);
 		getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+		
+		//Disable YT Downloader for non-debug builds
+		if(Common.DEBUG){
+			findPreference(Common.KEY_SHOW_DOWNLOAD).setEnabled(Common.DEBUG);
+		}
 	}
 
 	@Override
