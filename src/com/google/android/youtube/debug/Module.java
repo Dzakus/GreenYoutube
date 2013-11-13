@@ -14,11 +14,8 @@ import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-
-
 public class Module implements IXposedHookLoadPackage {
 
-	
 	public static final String CLASS_PROVIDER = "com.google.android.gsf.gservices.GservicesProvider";
 	public static final String CLASS_ANNOTATION_OVERLAY = "com.google.android.apps.youtube.core.player.overlay.j";
 	

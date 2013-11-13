@@ -10,7 +10,9 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceGroup;
 import android.provider.Settings;
 
 @SuppressWarnings("deprecation")
@@ -19,18 +21,25 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 	@SuppressWarnings("unused")
 	private static final String TAG = MainActivity.class.getSimpleName();
 	private static final int DLG_NEED_FORCE_STOP = 0;
+	private static final int DLG_NEED_REBOOT = 1;
 	private static final String EXTRA_PKG_NAME = "PACKAGE_NAME";
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// Hax for XSharedPreferences
 		getPreferenceManager().setSharedPreferencesMode(MODE_WORLD_WRITEABLE | MODE_WORLD_READABLE);
 		addPreferencesFromResource(R.xml.preference);
 		getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
 		
-		//Disable YT Downloader for non-debug builds
+		
 		if(Common.DEBUG){
-			findPreference(Common.KEY_SHOW_DOWNLOAD).setEnabled(Common.DEBUG);
+			//Enable YT Downloader for debug builds
+			findPreference(Common.KEY_SHOW_DOWNLOAD).setEnabled(true);
+		}else{
+			//Remove Media Player debug for non-debug builds.
+			getPreferenceScreen().removePreference(findPreference(Common.KEY_MEDIA_PLAYER_DEBUG));
 		}
 	}
 
@@ -44,6 +53,8 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 			Bundle b = new Bundle();
 			b.putString(EXTRA_PKG_NAME, Common.PKG_NAME_YOUTUBE);
 			showDialog(DLG_NEED_FORCE_STOP, b);
+		} else if(key.equals(Common.KEY_MEDIA_PLAYER_DEBUG)){
+			showDialog(DLG_NEED_REBOOT, null);
 		}
 	}
 
@@ -64,6 +75,11 @@ public class MainActivity extends PreferenceActivity implements OnSharedPreferen
 					MainActivity.this.startActivity(i);
 				}
 			});
+			return builder.create();
+		case DLG_NEED_REBOOT:
+			builder = new AlertDialog.Builder(this);
+			builder.setMessage(R.string.msg_need_reboot);
+			builder.setPositiveButton(android.R.string.ok, null);
 			return builder.create();
 		}
 		return super.onCreateDialog(id);

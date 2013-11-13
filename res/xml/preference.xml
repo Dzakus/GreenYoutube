@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <SwitchPreference
         android:defaultValue="false"
@@ -14,5 +14,8 @@
         android:enabled="false"
         android:key="show_download"
         android:title="@string/pref_show_download" />
-
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="media_player_debug"
+        android:title="@string/pref_media_player_debug" />
 </PreferenceScreen>

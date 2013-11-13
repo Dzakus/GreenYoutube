@@ -5,6 +5,7 @@
 	<string name="pref_is_bgol_enbled">Enable music in background</string>
 	<string name="pref_hide_watermark">Hide watermark on video</string>
 	<string name="pref_show_download">Show download button</string>
+	<string name="pref_media_player_debug">Media Player Debug</string>
 	<string name="msg_need_reboot">Device need reboot</string>
 	<string name="msg_need_force_stop">App need kill. \nClick force stop in next dialog.</string>
 	
