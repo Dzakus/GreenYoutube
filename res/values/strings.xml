@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Green Youtube</string>
+	<string name="pref_is_bgol_enbled">Enable music in background</string>
+	<string name="pref_hide_watermark">Hide watermark on video</string>
+	<string name="pref_show_download">Show download button</string>
+	<string name="msg_need_reboot">Device need reboot</string>
+	<string name="msg_need_force_stop">App need kill. \nClick force stop in next dialog.</string>
+	
+</resources>
